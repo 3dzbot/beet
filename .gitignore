@@ -1,0 +1,8 @@
+node_modules
+.idea
+.git
+composer.json
+package-lock.json
+LICENSE
+phpcs.xml.dist
+readme.txt

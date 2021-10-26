@@ -1,0 +1,27 @@
+header.site_header {
+    background: #fff;
+    height: 160px;
+
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    .container {
+        display: flex;
+        align-items: center;
+    }
+    .nav__main_menu {
+        margin-left: auto;
+    }
+    .header_main_menu  {
+        li {
+            margin-right: 30px;
+        }
+    }
+    .header__button {
+        width: 270px;
+        height: 90px;
+        width: 270px;
+        height: 90px;
+    }
+}
