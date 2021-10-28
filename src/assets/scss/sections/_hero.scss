@@ -25,3 +25,90 @@
 		text-align: center;
 	}
 }
+
+/* SEARCH FORM */
+.search_form {
+	display: none;
+}
+
+/* HERO-LIST */
+
+.vacancy__header_list {
+	flex-wrap: wrap;
+	margin-bottom: 80px;
+	li {
+		margin-right: 20px;
+	}
+	.active {
+		.button {
+			color: #fff;
+			background-color: $cRed;
+			border: 2px solid $cRed;
+			span {
+				color: #fff;
+			}
+		}
+	}
+	.button {
+		padding: 20px 30px;
+		border: 2px solid $tcDark;
+		font-size: 28px;
+		line-height: 1.2;
+		font-weight: 400;
+		color: $tcDark;
+		transition: color .2s linear, background-color .2s linear, border-color .2s linear;
+		span {
+			color: #989693;
+			font-size: 26px;
+			font-weight: 300;
+			letter-spacing: -0.02em;
+		}
+		&:hover {
+			color: #fff;
+			background-color: $cRed;
+			border-color: $cRed;
+		}
+	}
+}
+.vacancy__row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 60px;
+}
+
+.vacancy__column {
+	border-radius: 40px;
+	background: #fff;
+	padding: 60px 50px;
+}
+.vacancy__column__header {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 45px;
+}
+.vacancy__column_title {
+	font-size: 36px;
+	line-height: 1.2;
+	font-weight: 400;
+	letter-spacing: -0.01em;
+	color: #3d3935;
+	padding-right: 20px;
+}
+.vacancy__column_main {
+	font-size: 32px;
+	line-height: 45px;
+	font-weight: 300;
+	letter-spacing: 0.01em;
+	color: #3d3935;
+	margin-bottom: 28px;
+}
+.vacancy__column_bottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.vacancy__column_row {
+	display: inline-flex;
+	align-items: center;
+}

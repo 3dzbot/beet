@@ -35,3 +35,42 @@ function beet_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'beet_pingback_header' );
+
+/*
+ * сортировка массива
+ */
+function cmp($a, $b) {
+	if ($a->count == $b->count) {
+		return 0;
+	}
+	/*
+	 * от большего к меньшему
+	 */
+	return ($a->count > $b->count) ? -1 : 1;
+}
+
+/*
+ * вывод hot в лидеры списка
+ */
+function chekHot($arr) {
+	for ($i = 0; $i <= count($arr); $i++) {
+		if($arr[$i]->slug === 'hot' && $arr[$i]->count > 0 ) return $i;
+	}
+	return false;
+}
+
+/*
+ * набор иконок навыков
+ */
+function skillsListIcon( $termsArr ) {
+
+	$out = '';
+
+	foreach ($termsArr as $item) {
+		$term_id = $item->term_id;
+		$img_html = get_tax_images($term_id ,'full')[0];
+		$out .= $img_html;
+	}
+
+	return $out;
+}

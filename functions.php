@@ -180,3 +180,10 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/*
+ * обязательный для темы плагин WP Multiple Taxonomy Images
+ */
+if( ! is_admin() && ! function_exists('get_tax_image_urls') ){
+	wp_die('Активируйте обязательный для темы плагин WP Multiple Taxonomy Images');
+}
+
