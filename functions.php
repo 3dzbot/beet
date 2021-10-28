@@ -145,7 +145,14 @@ function beet_scripts() {
 	wp_enqueue_style( 'beet-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'beet-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'beet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
+
+	wp_localize_script('custom', 'myPlugin', array(
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		'name' => wp_get_current_user()->display_name,
+
+	));
+//	wp_enqueue_script( 'beet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -187,3 +194,15 @@ if( ! is_admin() && ! function_exists('get_tax_image_urls') ){
 	wp_die('Активируйте обязательный для темы плагин WP Multiple Taxonomy Images');
 }
 
+/*
+ * ajax
+ */
+
+add_action('wp_ajax_hello', 'say_hello');
+add_action('wp_ajax_nopriv_hello', 'say_hello');
+
+function say_hello() {
+	$name = empty($_GET['name']) ? 'user' : esc_attr($_GET['name']);
+	echo "Hello {$name}";
+	wp_die();
+}

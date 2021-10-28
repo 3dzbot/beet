@@ -4,7 +4,6 @@ $terms = get_terms( [
 	'taxonomy' => 'skills',
 	'hide_empty' => false,
 ] );
-
 ?>
 
 <div class="vacancy__wrapper">
