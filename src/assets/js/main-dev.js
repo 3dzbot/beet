@@ -7,49 +7,61 @@ import headerMenu from './modules/header-menu';
 document.addEventListener('DOMContentLoaded', () => {
 	"use strict"
 
-	let telInputEls = document.querySelectorAll('.phone_mask');
-	let numInputEls = document.querySelectorAll('.num_mask');
-	let maskOptions = {
-		mask: '+{38} (000) 000-00-00'
-	};
+	let ajaxBtnList = document.querySelector('.vacancy__header_list');
 
-	if (telInputEls) {
-		telInputEls.forEach(el => {
-			IMask(el, maskOptions);
-		})
-	}
+	// ajaxBtnList.addEventListener('click', checkBtn);
 
-	if (numInputEls) {
-		numInputEls.forEach(el => {
-			IMask(el, {
-				mask: 'num',
-				blocks: {
-					num: {
-						mask: Number,
-						thousandsSeparator: ' ',
-						min: 0,
-						max: 10000000000,
-					}
-				}
-			});
-		})
-	}
+	// function checkBtn(e) {
+	// 	const target = e.target;
+	// 	if(target.tagName === 'BUTTON') {
+	// 		ajaxSend(target);
+	// 		return
+	// 	} else if (target.parentNode.tagName === 'BUTTON') {
+	// 		ajaxSend(target.parentNode);
+	// 		return
+	// 	}
+	// }
 
-	const scrollTopBtn = document.querySelectorAll('.up-btn');
-	scrollTopBtn.forEach(el => {
-		el.addEventListener('click', () => {
-			window.scrollTo({
-				top: 0,
-				left: 0,
-				behavior: 'smooth'
-			});
-		})
-	})
+	// function ajaxSend(btn) {
+	// 	console.log(btn);
+	// 	let url = beet_ajax.ajaxurl;
+	// 	let data = {
+	// 		action: 'hello',
+	// 	};
+	// 	// fetch()
+	// 	//  .then(console.log(data))
+	// 	fetch(url)
+	// 	 .then(res => res.text())
+	// 	 .then(res => console.log(res));
+	// 	 // .catch(() => console.log('ошибка'));
+	//
+	//
+	// 	return;
+	//
+	// 	let obj = {
+	// 		action: 'hello',
+	// 	}
+	// 	getResource(url, obj)
+	// 	 .then(data => console.log(data))
+	// 	 .catch(err => console.error(err));
+	// }
+	//
+	// async function getResource(url, data) {
+	// 	const res = await fetch(`${url}`, {
+	// 		method: "POST",
+	// 		headers:{"content-type": "application/x-www-form-urlencoded"},
+	// 		body: {
+	// 			action: 'hello',
+	// 		}
+	// 	});
+	//
+	// 	if(!res.ok) {
+	// 		throw new Error (`Could not fetch ${url}, status: ${res.status}`)
+	// 	}
+	// 	// return await res.json();
+	// 	return res;
+	// }
 
-	accordion('.middle_top .item');
 
-	showMoreText(450, '.review_text_footer', {innerText: true, addClasses: ["inner-text", "white"]});
-
-	headerMenu();
 
 });

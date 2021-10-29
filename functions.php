@@ -147,10 +147,11 @@ function beet_scripts() {
 
 	wp_enqueue_script( 'custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
 
-	wp_localize_script('custom', 'myPlugin', array(
+	wp_localize_script('custom', 'beet_ajax', array(
 		'ajaxurl' => admin_url('admin-ajax.php'),
-		'name' => wp_get_current_user()->display_name,
-
+	));
+	wp_localize_script('main', 'beet_ajax', array(
+		'ajaxurl' => admin_url('admin-ajax.php'),
 	));
 //	wp_enqueue_script( 'beet-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
@@ -198,11 +199,52 @@ if( ! is_admin() && ! function_exists('get_tax_image_urls') ){
  * ajax
  */
 
-add_action('wp_ajax_hello', 'say_hello');
-add_action('wp_ajax_nopriv_hello', 'say_hello');
+add_action('wp_ajax_hello', 'find_vacancy');
+add_action('wp_ajax_nopriv_hello', 'find_vacancy');
 
-function say_hello() {
-	$name = empty($_GET['name']) ? 'user' : esc_attr($_GET['name']);
-	echo "Hello {$name}";
+function find_vacancy() {
+	$termSlug = $_GET['slug'];
+
+$args = array(
+	'post_type' => 'vacances',
+	'tax_query' => array(
+		array(
+			'taxonomy' => 'skills',
+			'field'    => 'slug',
+			'terms'    => $termSlug
+		)
+	)
+);
+$query = new WP_Query( $args );
+?>
+
+<?php if ( $query->have_posts() ) :
+	$vacancyArr = [];
+?>
+
+	<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+		<?php
+		$ID = get_the_ID();
+		$skills = wp_get_post_terms($ID,'skills');
+		$obj = [];
+		$obj['ID'] = $ID;
+		$obj['title'] = get_the_title();
+		$obj['description'] = get_the_excerpt();
+		$obj['company'] = get_the_post_thumbnail_url();
+		$obj['location'] = wp_get_post_terms($ID,'places')[0]->name;
+		$obj['skills'] = $skills;
+		$obj['skillsIcons'] = skillsListIcon($skills);
+		$vacancyArr[] = $obj;
+		?>
+
+	<?php endwhile; ?>
+
+	<?php wp_reset_postdata(); ?>
+
+	<?php else : ?>
+		<p><?php esc_html_e( 'Нет постов по вашим критериям.' ); ?></p>
+	<?php endif;
+//	echo json_encode($vacancyArr, JSON_UNESCAPED_UNICODE);
+	echo json_encode($vacancyArr);
 	wp_die();
 }

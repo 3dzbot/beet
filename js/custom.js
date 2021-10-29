@@ -1,11 +1,33 @@
 jQuery(document).ready( function( $ ){
-	var data = {
-		action: 'hello',
-		name: myPlugin.name
-	};
 
-	// с версии 2.8 'ajaxurl' всегда определен в админке
-	jQuery.get( myPlugin.ajaxurl, data, function( response ){
-		alert( 'Получено с сервера: ' + response );
-	} );
+	jQuery(document).on('click', '.vacancy-btn', function(e){
+
+		e.preventDefault();
+
+		const $this = $(this),
+			  value = $this.attr('data-filter');
+
+		var data = {
+			action: 'hello',
+			slug: value
+
+		};
+
+		// jQuery.get( beet_ajax.ajaxurl, data, function( response ){
+		// 	return response.json();
+		// 	})
+		//  	.then(i => console.log(typeof i))
+
+		$.ajax({
+			url:  beet_ajax.ajaxurl,
+			dataType: 'json',
+			data: data,
+			success: function (data) {
+				console.log(data);
+			}
+		});
+
+
+	});
 } );
+
