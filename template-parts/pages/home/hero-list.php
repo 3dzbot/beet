@@ -2,7 +2,7 @@
 
 $terms = get_terms( [
 	'taxonomy' => 'skills',
-	'hide_empty' => false,
+//	'hide_empty' => false,
 ] );
 ?>
 
@@ -31,6 +31,10 @@ $terms = get_terms( [
 			$count++;
 		} ?>
 		</ul>
+		<div class="vacancy_switcher">
+			<button class="sw_column active"></button>
+			<button class="sw_row"></button>
+		</div>
 	</div>
 	<!-- /.vacancy__header -->
 	<?php endif; ?>
@@ -51,6 +55,10 @@ $terms = get_terms( [
 	?>
 
 	<?php if ( $query->have_posts() ) : ?>
+
+	<script>
+		var vacancies = <?= json_encode($query); ?>;
+	</script>
 
 		<!-- пагинация -->
 	<div class="vacancy__row">
@@ -81,7 +89,10 @@ $terms = get_terms( [
 					<div class="vacancy__column_main"><?= $description ?></div>
 					<!-- /.vacancy__column_main -->
 					<div class="vacancy__column_bottom">
-						<div class="vacancy__column_place"><?= $location ?></div>
+						<div class="vacancy__column_place">
+							<a href="#">Details</a>
+							<span><?= $location ?></span>
+						</div>
 						<!-- /.vacancy__column_place -->
 						<div class="vacancy__column_row">
 							<?= $skillsIcons ?>

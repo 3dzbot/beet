@@ -8,60 +8,81 @@ document.addEventListener('DOMContentLoaded', () => {
 	"use strict"
 
 	let ajaxBtnList = document.querySelector('.vacancy__header_list');
+	let vacancySwitcher = document.querySelectorAll('.vacancy_switcher button');
 
-	// ajaxBtnList.addEventListener('click', checkBtn);
+	vacancySwitcher.forEach(btn => {
+		btn.addEventListener('click', switcherColumns)
+	})
 
-	// function checkBtn(e) {
-	// 	const target = e.target;
-	// 	if(target.tagName === 'BUTTON') {
-	// 		ajaxSend(target);
-	// 		return
-	// 	} else if (target.parentNode.tagName === 'BUTTON') {
-	// 		ajaxSend(target.parentNode);
-	// 		return
-	// 	}
-	// }
+	function switcherColumns(e) {
+		const btn = e.target.closest('button');
+		if(btn.classList.contains('active')) return;
+		const vacancyRow = document.querySelector('.vacancy__row');
+		vacancySwitcher.forEach(item=>item.classList.remove('active'));
+		btn.classList.add('active');
+		vacancyRow.classList.toggle('active');
+	}
 
-	// function ajaxSend(btn) {
-	// 	console.log(btn);
-	// 	let url = beet_ajax.ajaxurl;
-	// 	let data = {
-	// 		action: 'hello',
-	// 	};
-	// 	// fetch()
-	// 	//  .then(console.log(data))
-	// 	fetch(url)
-	// 	 .then(res => res.text())
-	// 	 .then(res => console.log(res));
-	// 	 // .catch(() => console.log('ошибка'));
-	//
-	//
-	// 	return;
-	//
-	// 	let obj = {
-	// 		action: 'hello',
-	// 	}
-	// 	getResource(url, obj)
-	// 	 .then(data => console.log(data))
-	// 	 .catch(err => console.error(err));
-	// }
-	//
-	// async function getResource(url, data) {
-	// 	const res = await fetch(`${url}`, {
-	// 		method: "POST",
-	// 		headers:{"content-type": "application/x-www-form-urlencoded"},
-	// 		body: {
-	// 			action: 'hello',
-	// 		}
-	// 	});
-	//
-	// 	if(!res.ok) {
-	// 		throw new Error (`Could not fetch ${url}, status: ${res.status}`)
-	// 	}
-	// 	// return await res.json();
-	// 	return res;
-	// }
+	ajaxBtnList.addEventListener('click', checkBtn);
 
+	function checkBtn(e) {
+		const target = e.target;
+		if(target.tagName === 'BUTTON') {
+			ajaxSend(target);
+			return
+		} else if (target.parentNode.tagName === 'BUTTON') {
+			ajaxSend(target.parentNode);
+			return
+		}
+	}
+	function ajaxSend(btn) {
+		let slug = btn.dataset.filter;
+		let url = beet_ajax.ajaxurl + `/?action=hello&slug=${slug}`;
 
+		fetch(url)
+		 .then(data => data.json())
+		 .then(data => createVacancyCard(data, btn))
+	}
 
+	function createVacancyCard(arr, btn) {
+
+		ajaxBtnList.querySelectorAll('li').forEach(item => item.classList.remove('active'));
+
+		let vacancyRow = document.querySelector('.vacancy__row');
+		vacancyRow.textContent = '';
+
+		arr.forEach(item => {
+			let company = item['company'] ? `<img src="${item['company']}" alt="Фото компании" width="120" height="51" loading="lazy">` : '';
+			let description = item['description'];
+			let skillsIcons = item['skillsIcons'];
+			let title = item['title'];
+			let location = item['location'] ? `<span>${item['location']}</span>` : '';
+
+			let card = document.createElement('div');
+			card.classList.add('vacancy__column');
+
+			card.innerHTML = `
+				<div class="vacancy__item">
+					<div class="vacancy__column__header">
+ 						<div class="vacancy__column_title">${title}</div>
+ 						<!-- /.vacancy__column_title -->
+ 						<div class="vacancy__column_brand">
+ 						${company}
+ 						</div>
+ 					</div>
+ 					<div class="vacancy__column_main">${description}</div>
+ 					<div class="vacancy__column_bottom">
+ 						<div class="vacancy__column_place"><a href="#">Details</a>${location}</div>
+ 						<div class="vacancy__column_row">
+ 						${skillsIcons}
+ 						</div>
+ 					</div>
+ 				</div>
+			`;
+
+			vacancyRow.append(card);
+
+			btn.closest('li').classList.add('active');
+		})
+	}
 });

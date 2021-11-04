@@ -9,7 +9,7 @@
 
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+	define( '_S_VERSION', '1.0.3' );
 }
 
 if ( ! function_exists( 'beet_setup' ) ) :
@@ -145,11 +145,11 @@ function beet_scripts() {
 	wp_enqueue_style( 'beet-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'beet-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
+//	wp_enqueue_script( 'custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
 
-	wp_localize_script('custom', 'beet_ajax', array(
-		'ajaxurl' => admin_url('admin-ajax.php'),
-	));
+//	wp_localize_script('custom', 'beet_ajax', array(
+//		'ajaxurl' => admin_url('admin-ajax.php'),
+//	));
 	wp_localize_script('main', 'beet_ajax', array(
 		'ajaxurl' => admin_url('admin-ajax.php'),
 	));
