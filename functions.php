@@ -98,6 +98,7 @@ if ( ! function_exists( 'beet_setup' ) ) :
 				'width'       => 102,
 				'flex-width'  => true,
 				'flex-height' => true,
+				'unlink-homepage-logo' => true,
 			)
 		);
 	}
@@ -137,6 +138,9 @@ function beet_widgets_init() {
 	);
 }
 add_action( 'widgets_init', 'beet_widgets_init' );
+
+require_once 'inc/ajax_custom.php';
+require_once 'inc/Workers.php';
 
 /**
  * Enqueue scripts and styles.
@@ -195,56 +199,8 @@ if( ! is_admin() && ! function_exists('get_tax_image_urls') ){
 	wp_die('Активируйте обязательный для темы плагин WP Multiple Taxonomy Images');
 }
 
-/*
- * ajax
- */
 
-add_action('wp_ajax_hello', 'find_vacancy');
-add_action('wp_ajax_nopriv_hello', 'find_vacancy');
 
-function find_vacancy() {
-	$termSlug = $_GET['slug'];
 
-$args = array(
-	'post_type' => 'vacances',
-	'tax_query' => array(
-		array(
-			'taxonomy' => 'skills',
-			'field'    => 'slug',
-			'terms'    => $termSlug
-		)
-	)
-);
-$query = new WP_Query( $args );
-?>
 
-<?php if ( $query->have_posts() ) :
-	$vacancyArr = [];
-?>
 
-	<?php while ( $query->have_posts() ) : $query->the_post(); ?>
-		<?php
-		$ID = get_the_ID();
-		$skills = wp_get_post_terms($ID,'skills');
-		$obj = [];
-		$obj['ID'] = $ID;
-		$obj['title'] = get_the_title();
-		$obj['description'] = get_the_excerpt();
-		$obj['company'] = get_the_post_thumbnail_url();
-		$obj['location'] = wp_get_post_terms($ID,'places')[0]->name;
-		$obj['skills'] = $skills;
-		$obj['skillsIcons'] = skillsListIcon($skills);
-		$vacancyArr[] = $obj;
-		?>
-
-	<?php endwhile; ?>
-
-	<?php wp_reset_postdata(); ?>
-
-	<?php else : ?>
-		<p><?php esc_html_e( 'Нет постов по вашим критериям.' ); ?></p>
-	<?php endif;
-//	echo json_encode($vacancyArr, JSON_UNESCAPED_UNICODE);
-	echo json_encode($vacancyArr);
-	wp_die();
-}

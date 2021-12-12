@@ -1,9 +1,25 @@
-.d_flex {
-	display: flex;
+.uppercase { text-transform: uppercase; }
+.d_flex  { display: flex; }
+.d_inline_flex { display: inline-flex; }
+.align_items_center { align-items: center; }
+.center { text-align: center; }
+.line_hover:hover {
+	.line_child { background-size: 100% 100%; }
 }
-.d_inline_flex {
-	display: inline-flex;
+.line_child {
+	background-image: linear-gradient(to top,transparent 0,$cRed 0, #ee6010 1px,transparent 1px);
+	background-repeat: no-repeat;
+	background-position: left;
+	background-size: 0% 100%;
+	transition: color .2s linear, background-size .3s;
 }
-.align_items_center {
-	align-items: center;
+.underline, %underline {
+	background-image: linear-gradient(to top, transparent 0, $cRed 0, $cRed 1px, transparent 1px);
+	background-repeat: no-repeat;
+	background-size: 0 100%;
+	background-position: center;
+	transition: background-size 0.4s;
+	&:hover {
+		background-size: 100% 100%;
+	}
 }

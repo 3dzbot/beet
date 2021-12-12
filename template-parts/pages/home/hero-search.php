@@ -1,3 +1,9 @@
+<?php
+get_search_form();
+
+showSome();
+?>
+
 <form action="#" class="search_form">
 	<label class="search_form__column">
 		<input class="search" name="search" type="text" placeholder="Search job openings">

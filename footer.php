@@ -15,6 +15,7 @@
 <!-- /.main_wrapper -->
 
 <footer id="colophon" class="site_footer">
+	<div class="transformation"></div>
 	<div class="container">
 		<div class="site_footer__row">
 			<div class="site_footer__column">

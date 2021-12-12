@@ -11,3 +11,9 @@
 	border: 2px solid $cRed;
 	border-radius: 45px;
 }
+@media (max-width: 2560px) {
+	.button {
+		font-size: calc(32px + (32 - 16) * (100vw - 2560px) / (2560 - 768));
+		border-radius: calc(45px + (45 - 27) * (100vw - 2560px) / (2560 - 768));
+	}
+}

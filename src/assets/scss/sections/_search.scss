@@ -61,3 +61,34 @@
 	border-top-right-radius: 60px;
 	border-bottom-right-radius: 60px;
 }
+@media (max-width: 2560px) {
+	.search_form {
+		font-size: calc(38px + (38 - 18) * (100vw - 2560px) / (2560 - 768));
+		margin-bottom: calc(60px + (60 - 40) * (100vw - 2560px) / (2560 - 768));
+		.search {
+			height: calc(130px + (130 - 60) * (100vw - 2560px) / (2560 - 768));
+			border-top-left-radius: calc(60px + (60 - 20) * (100vw - 2560px) / (2560 - 768));
+			border-bottom-left-radius: calc(60px + (60 - 20) * (100vw - 2560px) / (2560 - 768));
+			padding: calc(45px + (45 - 15) * (100vw - 2560px) / (2560 - 768)) calc(130px + (130 - 20) * (100vw - 2560px) / (2560 - 768));
+		}
+		.search,
+		.search::placeholder {
+			font-size: calc(38px + (38 - 18) * (100vw - 2560px) / (2560 - 768));
+		}
+		.submit {
+			width: calc(57px + (57 - 18) * (100vw - 2560px) / (2560 - 768));
+			height: calc(58px + (58 - 19) * (100vw - 2560px) / (2560 - 768));
+			left: calc(50px + (50 - 10) * (100vw - 2560px) / (2560 - 768));
+		}
+	}
+	.search_form__column {
+		.search_form__column_header {
+			height: calc(130px + (130 - 60) * (100vw - 2560px) / (2560 - 768));
+
+		}
+	}
+	.search_location {
+		border-top-right-radius: calc(60px + (60 - 20) * (100vw - 2560px) / (2560 - 768));
+		border-bottom-right-radius: calc(60px + (60 - 20) * (100vw - 2560px) / (2560 - 768));
+	}
+}
