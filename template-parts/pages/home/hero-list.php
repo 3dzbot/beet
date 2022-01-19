@@ -2,8 +2,9 @@
 
 $terms = get_terms( [
 	'taxonomy' => 'skills',
-//	'hide_empty' => false,
 ] );
+
+get_search_form();
 ?>
 
 <div class="vacancy__wrapper">
@@ -56,11 +57,7 @@ $terms = get_terms( [
 
 	<?php if ( $query->have_posts() ) : ?>
 
-	<script>
-		var vacancies = <?= json_encode($query); ?>;
-	</script>
 
-		<!-- пагинация -->
 	<div class="vacancy__row">
 		<!-- цикл -->
 		<?php while ( $query->have_posts() ) : $query->the_post(); ?>
@@ -96,7 +93,6 @@ $terms = get_terms( [
 						<!-- /.vacancy__column_place -->
 						<div class="vacancy__column_row">
 							<?= $skillsIcons ?>
-							<!-- /.vacancy__column_icon -->
 						</div>
 						<!-- /.vacancy__column_row -->
 					</div>

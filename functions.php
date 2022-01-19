@@ -9,7 +9,7 @@
 
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.3' );
+	define( '_S_VERSION', '1.0.5' );
 }
 
 if ( ! function_exists( 'beet_setup' ) ) :
@@ -105,7 +105,8 @@ if ( ! function_exists( 'beet_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'beet_setup' );
 
-require_once 'inc/script_style.php';
+require_once 'inc/ajax_custom.php';
+require_once 'inc/Workers.php';
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -139,21 +140,17 @@ function beet_widgets_init() {
 }
 add_action( 'widgets_init', 'beet_widgets_init' );
 
-require_once 'inc/ajax_custom.php';
-require_once 'inc/Workers.php';
-
 /**
  * Enqueue scripts and styles.
  */
 function beet_scripts() {
 	wp_enqueue_style( 'beet-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'beet-style', 'rtl', 'replace' );
+	wp_enqueue_style('main', get_template_directory_uri() . '/assets/css/main.min.css', array(), _S_VERSION);
 
-//	wp_enqueue_script( 'custom', get_template_directory_uri() . '/js/custom.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.min.js', array('jquery'), _S_VERSION, true);
 
-//	wp_localize_script('custom', 'beet_ajax', array(
-//		'ajaxurl' => admin_url('admin-ajax.php'),
-//	));
+
 	wp_localize_script('main', 'beet_ajax', array(
 		'ajaxurl' => admin_url('admin-ajax.php'),
 	));
@@ -198,9 +195,3 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 if( ! is_admin() && ! function_exists('get_tax_image_urls') ){
 	wp_die('Активируйте обязательный для темы плагин WP Multiple Taxonomy Images');
 }
-
-
-
-
-
-

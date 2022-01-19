@@ -1,4 +1,4 @@
-const createVacancyCard = (arr, btn) => {
+const createVacancyCard = (arr, btn = null) => {
 
 	const ajaxHeaderList = document.querySelector('.vacancy__header_list');
 	ajaxHeaderList.querySelectorAll('li').forEach(item => item.classList.remove('active'));
@@ -6,7 +6,7 @@ const createVacancyCard = (arr, btn) => {
 	let vacancyRow = document.querySelector('.vacancy__row');
 	vacancyRow.textContent = '';
 
-	if(Array.isArray(arr)) {
+	try {
 		arr.forEach(item => {
 			let company = item['company'] ? `<img src="${item['company']}" alt="Фото компании" width="120" height="51" loading="lazy">` : '';
 			let description = item['description'];
@@ -38,10 +38,10 @@ const createVacancyCard = (arr, btn) => {
 
 			vacancyRow.append(card);
 
-			btn.closest('li').classList.add('active');
+			if(btn) btn.closest('li').classList.add('active');
 		})
-	} else {
-		console.log(arr);
+	} catch (e) {
+		console.warn('empty array');
 	}
 }
 

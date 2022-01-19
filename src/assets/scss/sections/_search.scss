@@ -42,7 +42,7 @@
 	}
 }
 .search_form__column {
-
+	position: relative;
 	.search_form__column_header {
 		height: 130px;
 		display: flex;
@@ -54,6 +54,16 @@
 		max-height: 0;
 		overflow: hidden;
 		display: block;
+		position: absolute;
+		top: 100%;
+		right: 0;
+		left: 0;
+		transition: max-height .2s linear;
+		ul {
+			padding: 10px;
+			background: #f4f4f1;
+			border: 1px solid #000;
+		}
 	}
 
 }

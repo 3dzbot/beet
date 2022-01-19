@@ -10,11 +10,32 @@ document.addEventListener('DOMContentLoaded', () => {
 	search();
 
 	const btnSkillList = document.querySelectorAll('.vacancy__header_list li button');
+	const search_form__column_header = document.querySelectorAll('.search_form__column_header');
 	let vacancySwitcher = document.querySelectorAll('.vacancy_switcher button');
 
 	vacancySwitcher.forEach(btn => {
 		btn.addEventListener('click', switcherColumns)
 	})
+
+	search_form__column_header.forEach(item => {
+		item.addEventListener('click', toggleSearchWrap);
+
+	})
+
+	function toggleSearchWrap(e) {
+		const target = e.currentTarget;
+		const wrap = target.nextElementSibling;
+
+		const parent = target.closest('.search_form__column');
+
+		if(parent.classList.contains('active')){
+			parent.classList.remove('active');
+			wrap.style.maxHeight = null;
+		} else {
+			parent.classList.add('active');
+			wrap.style.maxHeight = wrap.scrollHeight + "px";
+		}
+	}
 
 	function switcherColumns(e) {
 		const btn = e.target.closest('button');
@@ -36,6 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		fetch(url)
 		 .then(data => data.json())
-		 .then(data => createVacancyCard(data, btn));
+		 .then(data => createVacancyCard(data.vacancy, btn))
 	}
 });

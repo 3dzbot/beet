@@ -1,9 +1,61 @@
+import createVacancyCard from './createCards';
+
 const searchAjax = () => {
 	/**
 	 * Cart Spinner Change
 	 */
-	jQuery(document).on('keyup', '.search', function(event){
+	const searchInput = document.querySelector('input.search');
+	const searchCheckboxArr = document.querySelectorAll('.search_form__column_list input');
 
+	if(!!searchCheckboxArr.length) {
+		searchCheckboxArr.forEach(item => {
+			item.addEventListener('change', searchFunction);
+		})
+	}
+
+	if(searchInput) {
+		searchInput.addEventListener('keyup', searchFunction);
+	}
+
+	function searchFunction(e) {
+		const target = e.currentTarget;
+		const form = target.closest('form');
+		const val = form.querySelector('input[name="s"]').value;
+
+		const places = [];
+		const skills = [];
+
+		jQuery('input[name="places"]:checked').each(function() {
+			places.push(jQuery(this).val());
+		});
+
+		jQuery('input[name="skills"]:checked').each(function() {
+			skills.push(jQuery(this).val());
+		});
+
+		const url = beet_ajax.ajaxurl;
+
+		jQuery.ajax( {
+			beforeSend  :   function(){ },
+			data        :   {
+				action  :   'search_ajax',
+				s       :   val,
+				skills,
+				places
+			},
+			dataType    :   'json',
+			method      :   'POST',
+			complete    :   function(){
+			},
+			success     :   function( response ){
+				createVacancyCard(response.data.result.vacancy);
+			},
+			url,
+		} );
+	}
+
+	jQuery(document).on('keyup', '.search', function(event){
+		return;
 		event.preventDefault();
 
 		const   $this       = jQuery(this),
@@ -20,9 +72,6 @@ const searchAjax = () => {
 			$reset.hide();
 		}
 
-		/**
-		 * Ajax
-		 */
 		jQuery.ajax( {
 			beforeSend  :   function(){ },
 			data        :   {
@@ -43,41 +92,6 @@ const searchAjax = () => {
 			},
 			url         :   beet_ajax.ajaxurl,
 		} );
-
-		console.log(value)
-
-	});
-
-	/**
-	 * Clear Input
-	 */
-	jQuery(document).on('click', '.header-form__button-reset', function(event){
-
-		event.preventDefault();
-
-		jQuery('.header-form__input').val('');
-		jQuery('.searchResultAjax').html('');
-		jQuery(this).hide();
-
-	});
-
-
-	/**
-	 * Hide Search Result
-	 * @mouseup
-	 */
-	jQuery(document).mouseup(function (e){
-
-		var div = jQuery('.header-form');
-
-		if (!div.is(e.target)
-		 && div.has(e.target).length === 0) {
-
-			jQuery('.header-form__input').val('');
-			jQuery('.searchResultAjax').html('');
-			jQuery('.header-form__button-reset').hide();
-
-		}
 
 	});
 }
